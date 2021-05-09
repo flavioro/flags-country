@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 import { Country } from "../types/Country";
+import Filter from '../components/Filter'
 
 type HomeProps = {
   countries?: Country[];
@@ -11,6 +12,16 @@ type HomeProps = {
 const Home: React.FC<HomeProps> = ({ countries }) => {
   return (
     <>
+
+      <Grid container className='filter-row'>
+        <Grid item xs={9}>
+          <input type='text' placeholder='Search for a country...' className='input-search' />
+        </Grid>
+        <Grid item xs={3}>
+          <Filter />
+        </Grid>
+      </Grid>
+
       <Grid container spacing={3}>
         {countries && (
           countries.map((country, i) => (
