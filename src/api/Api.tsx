@@ -2,11 +2,11 @@ import axios from 'axios'
 
 const API = async () => {
   try {
-    const resp = await axios.get(String(process.env.API_URL))
+    return await axios.get("https://restcountries.eu/rest/v2/all").then(res => res.data)
   } catch (err) {
     // Handle Error Here
     console.error(err);
   }
 }
 
-export default axios(String(process.env.API_URL));
+export default API;
