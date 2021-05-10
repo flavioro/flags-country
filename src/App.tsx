@@ -1,28 +1,48 @@
 import React from 'react';
-// import { useQuery } from "react-query";
 import {
   BrowserRouter as Router,
   Switch,
+  Route,
+  Redirect,
+  Link,
 } from 'react-router-dom';
 
-// import { Country } from "./types/Country";
-// import api from './api/Api'
+import style from "./App.module.scss";
+import ThemeToggle from './components/ThemeToggle';
 import Home from './pages/Home';
+import SinglePage from './pages/SinglePage';
 
 export default function App() {
 
-  // const { data } = useQuery<Country[]>(
-  //   "countries",
-  //   api
-  // );
-
   return (
     <Router>
-      <div>
-        <Switch>
-          {/* <Home countries={data} /> */}
-          <Home/>
-        </Switch>
+      <div className={style.container}>
+
+        <header className={style.header}>
+          <div className={style.content}>
+            <Link to='/'>Where in the world?</Link>
+
+            <div>
+              <ThemeToggle />
+            </div>
+
+          </div>
+        </header>
+
+        <div className={style.container}>
+          <Switch>
+            <Route path="/" exact >
+              <Home />
+            </Route>
+            <Route path="/countries/:id" >
+              {/* <SinglePage countryMap={countryMap} /> */}
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+
+        </div>
+
+
       </div>
     </Router>
   );

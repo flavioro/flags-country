@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { useQuery } from "react-query";
 import InputBase from '@material-ui/core/InputBase';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import axios, { AxiosResponse } from 'axios'
 
@@ -11,10 +15,13 @@ import Filter from '../components/Filter'
 
 import api from '../api/Api'
 
+const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+
 const Home = () => {
   // const [countries, setCountries] = useState<Country[]>();
   const [countries, setCountries] = useState();
   const [textSearch, setTextSearch] = useState('');
+  const [regionSelected, setRegionSelected] = useState('');
   let countriesAll = ""
 
   useEffect(() => {
@@ -32,14 +39,14 @@ const Home = () => {
     countriesAll = countries
   }, []);
 
-  // useEffect(() => {
-  //   if(regionSelected) {
-  //     Api.get(`https://restcountries.eu/rest/v2/regionalbloc/${regionSelected}`)
-  //       .then(({data}) => setCountries(data));
-  //   } else {
-  //     setCountries(countriesAll);
-  //   }
-  // }, [regionSelected]);
+  useEffect(() => {
+    if (regionSelected) {
+      axios.get(`https://restcountries.eu/rest/v2/region/${regionSelected}`)
+        .then(({ data }) => setCountries(data));
+    } else {
+      setCountries(countriesAll);
+    }
+  }, [regionSelected]);
 
 
   const QueryAllCountries = async () => {
@@ -57,6 +64,11 @@ const Home = () => {
     // query(value);
   }
 
+  const handleChange = (e) => {
+    setRegionSelected(e.target.value);
+    // select(e.target.value);
+  }
+
   return (
     <>
       <Grid container className='filter-row'>
@@ -69,9 +81,24 @@ const Home = () => {
           />
         </Grid>
 
-        <Grid item xs={3}>
+        {/* <Grid item xs={3}>
           <Filter />
-        </Grid>
+        </Grid> */}
+
+        <FormControl variant="outlined">
+          <InputLabel id="region-label">Região</InputLabel>
+          <Select
+            labelId="region-label"
+            value={regionSelected}
+            onChange={handleChange}
+            label="Region"
+          >
+            {/* <MenuItem value="">
+                <em>Nenhum</em>
+              </MenuItem> */}
+            {regions.map((region, idx) => (<MenuItem value={region.code} key={idx}>{region.name}</MenuItem>))}
+          </Select>
+        </FormControl>
       </Grid>
 
       {/* Countries flags */}
