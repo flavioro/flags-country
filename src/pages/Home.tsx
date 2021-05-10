@@ -1,15 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import { useQuery } from "react-query";
+
+import axios, { AxiosResponse } from 'axios'
 
 import { Country } from "../types/Country";
 import Filter from '../components/Filter'
 
-type HomeProps = {
-  countries?: Country[];
-};
+import api from '../api/Api'
 
-const Home: React.FC<HomeProps> = ({ countries }) => {
+const Home = () => {
+  const [countries, setCountries] = useState<Country[]>();
+
+  useEffect(() => { QueryAllCountries() }, []);
+
+  const QueryAllCountries = async () => {
+    // Use [] as second argument in useEffect for not rendering each time
+    axios.get('https://restcountries.eu/rest/v2/all')
+    .then((response: AxiosResponse) => {
+        console.log(response.data);
+        setCountries( response.data );
+    });
+  }
+
   return (
     <>
 
@@ -22,6 +36,7 @@ const Home: React.FC<HomeProps> = ({ countries }) => {
         </Grid>
       </Grid>
 
+      // Countries flags
       <Grid container spacing={3}>
         {countries && (
           countries.map((country, i) => (
