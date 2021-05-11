@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import { useQuery } from "react-query";
 import InputBase from '@material-ui/core/InputBase';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 import { formatNumber } from '../helpers/utilities';
 import { Country } from "../types/Country";
@@ -21,23 +20,22 @@ const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 const Home = () => {
   // const [countries, setCountries] = useState<Country[]>();
   const [countries, setCountries] = useState();
+  const [countriesAll, setCountriesAll] = useState();
   const [textSearch, setTextSearch] = useState('');
   const [regionSelected, setRegionSelected] = useState('');
-  let countriesAll = ""
 
   useEffect(() => {
-    console.log(textSearch)
-    if (textSearch) {
+    if (textSearch && textSearch.length > 0) {
       axios.get(`https://restcountries.eu/rest/v2/name/${textSearch}`)
         .then(({ data }) => setCountries(data));
     } else {
-      setCountries(countriesAll);
+      setCountries(countries);
     }
   }, [textSearch]);
 
   useEffect(() => {
     QueryAllCountries()
-    countriesAll = countries
+    setCountriesAll(countries)
   }, []);
 
   useEffect(() => {
@@ -55,19 +53,16 @@ const Home = () => {
     axios.get('https://restcountries.eu/rest/v2/all')
       // .then((response: AxiosResponse) => {
       .then((response) => {
-        console.log(response.data);
         setCountries(response.data);
       });
   }
 
   const handleInput = ({ value }) => {
     setTextSearch(value)
-    // query(value);
   }
 
   const handleChange = (e) => {
     setRegionSelected(e.target.value);
-    // select(e.target.value);
   }
 
   return (
@@ -94,10 +89,14 @@ const Home = () => {
             onChange={handleChange}
             label="Region"
           >
-            {/* <MenuItem value="">
-                <em>Nenhum</em>
-              </MenuItem> */}
-            {regions.map((region, idx) => (<MenuItem value={region.code} key={idx}>{region.name}</MenuItem>))}
+            <MenuItem value="All">
+              <span>Filter by Region</span>
+            </MenuItem>
+            <MenuItem value="Africa">Africa</MenuItem>
+            <MenuItem value="Americas">Americas</MenuItem>
+            <MenuItem value="Asia">Asia</MenuItem>
+            <MenuItem value="Europe">Europe</MenuItem>
+            <MenuItem value="Oceania">Oceania</MenuItem>
           </Select>
         </FormControl>
       </Grid>

@@ -80,9 +80,11 @@ const SinglePage: React.FC<SinglePageProps> = ({ countryMap }: SinglePageProps) 
                   <>
                     <strong>Border Countries: </strong>
                     {country.borders.map((e, i) => (
-                      <Link to={`/countries/${e}`} key={i}>
-                        {countryMap ? countryMap[e] : e}
-                      </Link>
+                      <> <pre></pre>
+                        <Link to={`/countries/${e}`} key={i}>
+                          {countryMap ? countryMap[e] : e}
+                        </Link>
+                      </>
                     ))}
                   </>
                 ) : (
