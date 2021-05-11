@@ -10,12 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios'
 
 import { formatNumber } from '../helpers/utilities';
-import { Country } from "../types/Country";
-import Filter from '../components/Filter'
-
-import api from '../api/Api'
-
-const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 
 const Home = () => {
   // const [countries, setCountries] = useState<Country[]>();
