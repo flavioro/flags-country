@@ -12,8 +12,8 @@ import ThemeToggle from './components/ThemeToggle';
 import Home from './pages/Home';
 import SinglePage from './pages/SinglePage';
 
-export default function App() {
 
+export default function App() {
   return (
     <Router>
       <div className={style.container}>
@@ -35,7 +35,7 @@ export default function App() {
               <Home />
             </Route>
             <Route path="/countries/:id" >
-              {/* <SinglePage countryMap={countryMap} /> */}
+              <SinglePage />
             </Route>
             <Redirect to="/" />
           </Switch>

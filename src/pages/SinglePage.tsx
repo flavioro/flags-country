@@ -14,8 +14,12 @@ type SinglePageProps = {
   countryMap?: { [key: string]: string };
 }
 
+type ParamTypes = {
+  id: string
+}
+
 const SinglePage: React.FC<SinglePageProps> = ({ countryMap }: SinglePageProps) => {
-  const { id } = useParams();
+  const { id } = useParams<ParamTypes>()
   const { data: country, isLoading } = useQuery<Country>(id, fetchCountry);
 
   return (
@@ -82,10 +86,10 @@ const SinglePage: React.FC<SinglePageProps> = ({ countryMap }: SinglePageProps) 
                     ))}
                   </>
                 ) : (
-                    <>
-                      <strong>No border countries</strong>
-                    </>
-                  )}
+                  <>
+                    <strong>No border countries</strong>
+                  </>
+                )}
               </Grid>
             </Grid>
 

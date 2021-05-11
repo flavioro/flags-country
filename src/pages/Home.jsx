@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import axios, { AxiosResponse } from 'axios'
 
+import { formatNumber } from '../helpers/utilities';
 import { Country } from "../types/Country";
 import Filter from '../components/Filter'
 
@@ -107,13 +108,13 @@ const Home = () => {
           countries.map((country, i) => (
             <Grid item xs={3} key={i}>
 
-              <Link to={`countries/${country.alpha3Code}`} >
+              <Link to={`countries/${country.alpha3Code}`} params={{ countryMap: country }}>
                 <img src={country.flag} alt={`Flag of ${country.name}`} />
               </Link>
 
               <div>
                 <h5>{country.name}</h5>
-                {/* <p><strong>Population:</strong> {formatNumber(country.population)}</p> */}
+                <p><strong>Population:</strong> {formatNumber(country.population)}</p>
                 <p><strong>Region:</strong> {country.region}</p>
                 <p><strong>Capital:</strong> {country.capital}</p>
               </div>
